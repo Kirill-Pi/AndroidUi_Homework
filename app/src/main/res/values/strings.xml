@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">pigolev.myapplication</string>
+    <string name="button_1">ПОИСК</string>
+    <string name="button_2">ИЗБРАННОЕ</string>
+    <string name="button_3">ОТЛОЖИТЬ</string>
+    <string name="button_4">ПОДБОРКИ</string>
+    <string name="button_5">НАСТРОЙКИ</string>
+    <string name="top_view">Movie search</string>
+    <string name="pictures_sourse">pictures are taken from www.movieposters.com</string>
+
 </resources>
