@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/favorites"
+        android:icon="@drawable/baseline_favorite_border_24"
+        android:title="@string/menu_favorites_title"
+        app:showAsAction="withText" />
+    <item
+        android:id="@+id/watch_later"
+        android:icon="@drawable/baseline_watch_later_24"
+        android:title="@string/menu_watch_later_title"
+        app:showAsAction="withText" />
+    <item
+        android:id="@+id/library"
+        android:icon="@drawable/baseline_video_library_24"
+        android:title="@string/menu_library"
+        app:showAsAction="withText" />
+
+</menu>
