@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">pigolev.myapplication</string>
     <string name="button_1">ПОИСК</string>
-    <string name="button_2">ИЗБРАННОЕ</string>
-    <string name="button_3">ОТЛОЖИТЬ</string>
-    <string name="button_4">ПОДБОРКИ</string>
     <string name="button_5">НАСТРОЙКИ</string>
-    <string name="top_view">Movie search</string>
+    <string name="page_title">Movie search</string>
     <string name="pictures_sourse">pictures are taken from www.movieposters.com</string>
+    <string name="menu_settings_title">НАСТРОЙКИ</string>
+    <string name="menu_favorites_title">ИЗБРАННОЕ</string>
+    <string name="menu_watch_later_title">ОТЛОЖИТЬ</string>
+    <string name="menu_library">ПОДБОРКИ</string>
 
 </resources>
