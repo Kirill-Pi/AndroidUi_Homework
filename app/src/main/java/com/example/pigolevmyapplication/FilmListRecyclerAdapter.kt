@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 class FilmListRecyclerAdapter(private val clickListener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val items = mutableListOf<Film>()
+    private var items = mutableListOf<Film>()
     override fun getItemCount() = items.size
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return FilmViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.film_item, parent, false))
@@ -25,12 +25,20 @@ class FilmListRecyclerAdapter(private val clickListener: OnItemClickListener) : 
     }
 
 
-    fun addItems(list: MutableList<Film>) {
-        val diff = FilmDiff(items, list)
+    fun updateItems(list: MutableList<Film>) {
+        val oldList = this.items
+        val diff = FilmDiff(oldList, list)
         val diffResult = DiffUtil.calculateDiff(diff)
-        items.addAll(list)
+        this.items = list
         diffResult.dispatchUpdatesTo(this)
     }
+
+    fun addItems (newList: MutableList<Film>) {
+        var addList = this.items
+        addList.addAll(newList)
+        updateItems(addList)
+    }
+
 
 
 
