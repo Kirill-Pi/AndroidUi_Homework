@@ -3,11 +3,13 @@
     <string name="button_1">ПОИСК</string>
     <string name="button_5">НАСТРОЙКИ</string>
     <string name="page_title">Movie search</string>
-    <string name="pictures_sourse">pictures are taken from www.movieposters.com</string>
+    <string name="pictures_source">pictures are taken from www.movieposters.com</string>
     <string name="menu_settings_title">НАСТРОЙКИ</string>
     <string name="menu_favorites_title">ИЗБРАННОЕ</string>
     <string name="menu_watch_later_title">ОТЛОЖИТЬ</string>
     <string name="menu_library">ПОДБОРКИ</string>
     <string name="drno">"A resourceful British government agent seeks answers in a case involving the disappearance of a colleague and the disruption of the American space program."</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

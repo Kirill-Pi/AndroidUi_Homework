@@ -8,6 +8,10 @@ android {
     namespace 'com.example.pigolevmyapplication'
     compileSdk 33
 
+    buildFeatures {
+        viewBinding true
+    }
+
     defaultConfig {
         applicationId "com.example.pigolevmyapplication"
         minSdk 24
@@ -31,6 +35,8 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+
 }
 
 dependencies {
