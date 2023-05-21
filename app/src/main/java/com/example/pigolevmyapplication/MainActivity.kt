@@ -82,10 +82,11 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.favorites -> {
-                    val snackbarFavorites =
-                        Snackbar.make(bottomNavigation, "Избранное", Snackbar.LENGTH_SHORT)
-                    snackbarFavorites.anchorView = bottomNavigation
-                    snackbarFavorites.show()
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.fragment_placeholder, FavoritesFragment())
+                        .addToBackStack(null)
+                        .commit()
                     true
                 }
                 R.id.watch_later -> {
