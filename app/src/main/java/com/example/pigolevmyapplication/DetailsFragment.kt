@@ -1,5 +1,6 @@
 package com.example.pigolevmyapplication
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,23 +20,40 @@ import com.google.android.material.snackbar.Snackbar
 class DetailsFragment : Fragment() {
 
 
-
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
+    lateinit var film: Film
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
-        val view=binding.root
+        val view = binding.root
+        film = arguments?.get("film") as Film
+
+        binding.detailsFab.setOnClickListener {
+            //Создаем интент
+            val intent = Intent()
+            //Указываем action с которым он запускается
+            intent.action = Intent.ACTION_SEND
+            //Кладем данные о нашем фильме
+            intent.putExtra(
+                Intent.EXTRA_TEXT,
+                "Check out this film: ${film.title} \n\n ${film.description}"
+            )
+            //Указываем MIME тип, чтобы система знала, какое приложения предложить
+            intent.type = "text/plain"
+            //Запускаем наше активити
+            startActivity(Intent.createChooser(intent, "Share To:"))
+        }
 
 
         return view
     }
 
     private fun detailsInit() {
-        val film = arguments?.get("film") as Film
+
         binding.detailsToolbar.title = film.title
         binding.detailsPoster.setImageResource(film.poster)
         binding.detailsDescription.text = film.description
@@ -45,8 +63,23 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         detailsInit()
-    }
 
+        binding.detailsFabFavorites.setImageResource(
+            if (film.isInFavorites) R.drawable.baseline_favorite_24
+            else R.drawable.baseline_favorite_border_24
+        )
+        binding.detailsFabFavorites.setOnClickListener {
+            if (!film.isInFavorites) {
+                binding.detailsFabFavorites.setImageResource(R.drawable.baseline_favorite_24)
+                film.isInFavorites = true
+            } else {
+                binding.detailsFabFavorites.setImageResource(R.drawable.baseline_favorite_border_24)
+                film.isInFavorites = false
+            }
+        }
+
+
+    }
 }
 
 
