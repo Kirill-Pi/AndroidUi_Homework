@@ -34,11 +34,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
-
         supportFragmentManager
             .beginTransaction()
             .add(R.id.fragment_placeholder, HomeFragment())
@@ -48,7 +46,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun launchDetailsFragment(film: Film) {
-
         val bundle = Bundle()
         bundle.putParcelable("film", film)
         val fragment = DetailsFragment()
@@ -63,7 +60,6 @@ class MainActivity : AppCompatActivity() {
     private fun menuInit() {
 
         var topAppBar = binding.topAppBar
-
         topAppBar.setNavigationOnClickListener {
             Toast.makeText(this, "Кинопоиск...", Toast.LENGTH_SHORT).show()
         }
