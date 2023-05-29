@@ -10,11 +10,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.SearchView.*
+import androidx.core.view.isVisible
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pigolevmyapplication.databinding.FragmentHomeBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.util.*
 
 
 class HomeFragment : Fragment() {
@@ -57,8 +61,46 @@ class HomeFragment : Fragment() {
 
             filmsAdapter.updateItems(filmDB)
         }
+
+        searchViewInit(binding)
+
+    //Setup searchView depending on scroll direction
+        binding.mainRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                binding.searchView.isVisible = dy >= 0
+
+                }
+            }
+        )
+    }
+
+    private fun searchViewInit(binding: FragmentHomeBinding) {
+        binding.searchView.setOnClickListener {
+            binding.searchView.isIconified = false
+        }
+        binding.searchView.setOnQueryTextListener(object : OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText?.isEmpty() == true) {
+                    filmsAdapter.updateItems(filmDB)
+                    return true
+                }
+                val result = filmDB.filter {
+
+                    it.title.lowercase(Locale.getDefault()).contains(
+                        newText?.lowercase(Locale.getDefault())!!
+                    )
+                }
+                filmsAdapter.updateItems(result.toMutableList())
+                return true
+            }
+        })
     }
 }
+
+
 
 
 
