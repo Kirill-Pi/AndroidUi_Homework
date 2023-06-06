@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 
 class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -16,7 +17,11 @@ class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(film: Film) {
         title.text = film.title
-        poster.setImageResource(film.poster)
+        //Using Glide to add pictures
+        Glide.with(itemView)
+            .load(film.poster)
+            .centerCrop()
+            .into(poster)
         this.description.text = film.description
     }
 }
