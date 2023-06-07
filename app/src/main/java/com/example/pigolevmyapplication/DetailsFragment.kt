@@ -3,6 +3,10 @@ package com.example.pigolevmyapplication
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.transition.AutoTransition
+import android.transition.Fade
+import android.transition.Slide
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +22,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 
 class DetailsFragment : Fragment() {
+
+    //Fragment animation setup
+    init {
+        enterTransition = Fade(Fade.IN).apply { duration = 800 }
+        returnTransition = Fade(Fade.OUT).apply {
+            duration = 800;mode = Fade.MODE_OUT
+        }
+    }
 
 
     private var _binding: FragmentDetailsBinding? = null
@@ -74,6 +86,7 @@ class DetailsFragment : Fragment() {
         }
     }
 }
+
 
 
 
