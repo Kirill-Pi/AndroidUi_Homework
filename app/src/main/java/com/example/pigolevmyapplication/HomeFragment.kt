@@ -1,23 +1,15 @@
 package com.example.pigolevmyapplication
 
-import android.app.AlertDialog
-import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
-import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.*
 import androidx.core.view.isVisible
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pigolevmyapplication.databinding.FragmentHomeBinding
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.*
 
 
@@ -72,6 +64,7 @@ class HomeFragment : Fragment() {
                 }
             }
         )
+        AnimationHelper.performFragmentCircularRevealAnimation(binding.homeFragmentRoot, requireActivity(), 1)
     }
 
     private fun searchViewInit(binding: FragmentHomeBinding) {

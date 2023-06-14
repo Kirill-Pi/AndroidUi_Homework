@@ -11,5 +11,8 @@
     <string name="drno">"A resourceful British government agent seeks answers in a case involving the disappearance of a colleague and the disruption of the American space program."</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_home_title_text">ГЛАВНАЯ</string>
+    <string name="animation_description">Animation by Anastasiya Remeslova taken from https://lottiefiles.com</string>
+
 
 </resources>
