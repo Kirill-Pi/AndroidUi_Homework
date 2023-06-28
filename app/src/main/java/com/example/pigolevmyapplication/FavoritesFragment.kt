@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.pigolevmyapplication.databinding.FragmentDetailsBinding
 import com.example.pigolevmyapplication.databinding.FragmentFavoritesBinding
+import com.example.pigolevmyapplication.databinding.FragmentHomeBinding
 
 class FavoritesFragment : Fragment() {
 
@@ -22,7 +22,7 @@ class FavoritesFragment : Fragment() {
 
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
-    private var favoritesDB = FilmDB.favoritesDB()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,11 +30,14 @@ class FavoritesFragment : Fragment() {
     ): View? {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         val view = binding.root
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         binding.favoritesRecycler
             .apply {
                 var filmsAdapter =
@@ -47,7 +50,9 @@ class FavoritesFragment : Fragment() {
                 layoutManager = LinearLayoutManager(requireContext())
                 val decorator = TopSpacingItemDecoration(8)
                 addItemDecoration(decorator)
-                filmsAdapter.addItems(favoritesDB)
+                filmsAdapter.addItems(FilmDB.favoritesDB())
             }
+        AnimationHelper.performFragmentCircularRevealAnimation(binding.homeFragmentRoot, requireActivity(), 2)
+
     }
 }
