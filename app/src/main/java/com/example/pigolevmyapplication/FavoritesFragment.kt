@@ -1,19 +1,17 @@
 package com.example.pigolevmyapplication
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pigolevmyapplication.databinding.FragmentFavoritesBinding
-import com.example.pigolevmyapplication.databinding.FragmentHomeBinding
 
 class FavoritesFragment : Fragment() {
 
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,8 +25,6 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         binding.favoritesRecycler
             .apply {
                 var filmsAdapter =
@@ -44,6 +40,5 @@ class FavoritesFragment : Fragment() {
                 filmsAdapter.addItems(FilmDB.favoritesDB())
             }
         AnimationHelper.performFragmentCircularRevealAnimation(binding.homeFragmentRoot, requireActivity(), 2)
-
     }
 }

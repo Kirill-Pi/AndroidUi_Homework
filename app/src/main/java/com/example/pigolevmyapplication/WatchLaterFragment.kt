@@ -1,16 +1,14 @@
 package com.example.pigolevmyapplication
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.pigolevmyapplication.databinding.FragmentHomeBinding
+import androidx.fragment.app.Fragment
 import com.example.pigolevmyapplication.databinding.FragmentWatchLaterBinding
 
 
 class WatchLaterFragment : Fragment() {
-
     private lateinit var binding: FragmentWatchLaterBinding
 
 
@@ -18,7 +16,6 @@ class WatchLaterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentWatchLaterBinding.inflate(inflater, container, false)
         return binding.root
     }

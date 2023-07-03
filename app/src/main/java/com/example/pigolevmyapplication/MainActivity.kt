@@ -1,27 +1,15 @@
 package com.example.pigolevmyapplication
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.pigolevmyapplication.databinding.ActivityMainBinding
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.internal.NavigationMenu
-import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
-
     private val onBackPressedCallback: OnBackPressedCallback =
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -38,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         menuInit()
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
         supportFragmentManager
@@ -46,7 +33,6 @@ class MainActivity : AppCompatActivity() {
             .add(R.id.fragment_placeholder, HomeFragment())
             .addToBackStack("home")
            .commit()
-
     }
 
     fun launchDetailsFragment(film: Film) {
@@ -62,7 +48,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun menuInit() {
-
        /* var topAppBar = binding.topAppBar
         topAppBar.setNavigationOnClickListener {
             Toast.makeText(this, "Кинопоиск...", Toast.LENGTH_SHORT).show()
@@ -118,8 +103,6 @@ class MainActivity : AppCompatActivity() {
             .setNegativeButton("Нет", null)
             .show()
     }
-
-
 
     private fun checkFragmentExistence(tag: String): Fragment? = supportFragmentManager.findFragmentByTag(tag)
 

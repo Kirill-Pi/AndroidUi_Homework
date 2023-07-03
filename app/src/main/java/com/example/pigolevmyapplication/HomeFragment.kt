@@ -14,10 +14,8 @@ import java.util.*
 
 
 class HomeFragment : Fragment() {
-
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-
     private lateinit var filmsAdapter: FilmListRecyclerAdapter
     private var filmDB = FilmDB.filmsDataBase
 
@@ -27,18 +25,13 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view=binding.root
-
-
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val binding = FragmentHomeBinding.bind(view)
         binding.mainRecycler.apply {
-
-
             filmsAdapter =
                 FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener {
 
@@ -50,12 +43,10 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             val decorator = TopSpacingItemDecoration(8)
             addItemDecoration(decorator)
-
             filmsAdapter.updateItems(filmDB)
         }
 
         searchViewInit(binding)
-
     //Setup searchView depending on scroll direction
         binding.mainRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

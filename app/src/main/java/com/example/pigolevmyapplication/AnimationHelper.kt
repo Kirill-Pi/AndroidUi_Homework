@@ -6,7 +6,6 @@ import android.view.ViewAnimationUtils
 import android.view.animation.AccelerateDecelerateInterpolator
 import java.util.concurrent.Executors
 import kotlin.math.hypot
-import kotlin.math.roundToInt
 
 object AnimationHelper {
 
@@ -20,7 +19,7 @@ object AnimationHelper {
                         //val itemCenter = rootView.width / (menuItems * 2)
                         //val step = (itemCenter * 2) * (position - 1) + itemCenter
 
-                        //Setup random animation start point
+                        //Setup animation random  start point
                         val x: Int = (0..rootView.width.toInt()).random().toInt()
                         val y: Int = (0..rootView.height.toInt()).random().toInt()
 
