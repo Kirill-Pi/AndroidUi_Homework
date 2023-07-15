@@ -16,6 +16,9 @@ class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(film: Film) {
         title.text = film.title
+
+        //Using Glide to add pictures
+
         Glide.with(itemView)
             .load(film.poster)
             .centerCrop()

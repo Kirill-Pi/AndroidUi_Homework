@@ -2,6 +2,10 @@ package com.example.pigolevmyapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.transition.AutoTransition
+import android.transition.Fade
+import android.transition.Slide
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +13,17 @@ import androidx.fragment.app.Fragment
 import com.example.pigolevmyapplication.databinding.FragmentDetailsBinding
 
 class DetailsFragment : Fragment() {
+
+
+    //Fragment animation setup
+    init {
+        enterTransition = Fade(Fade.IN).apply { duration = 800 }
+        returnTransition = Fade(Fade.OUT).apply {
+            duration = 800;mode = Fade.MODE_OUT
+        }
+    }
+
+
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
@@ -63,6 +78,7 @@ class DetailsFragment : Fragment() {
         }
     }
 }
+
 
 
 
