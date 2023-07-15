@@ -22,6 +22,9 @@ import java.util.*
 //@Suppress("DEPRECATION")
 class HomeFragment : Fragment() {
 
+    private lateinit var binding: FragmentHomeBinding
+
+
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -36,6 +39,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding2: MergeHomeScreenContentBinding
 
 
+
     private lateinit var filmsAdapter: FilmListRecyclerAdapter
     private var filmDB = FilmDB.filmsDataBase
 
@@ -44,13 +48,16 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val view=binding.root
+
+        return binding.root
+
 
         binding2 = MergeHomeScreenContentBinding.inflate(layoutInflater, binding.homeFragmentRoot, false)
 
 
 
         return view
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

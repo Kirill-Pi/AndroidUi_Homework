@@ -14,6 +14,9 @@ import com.example.pigolevmyapplication.databinding.FragmentDetailsBinding
 
 class DetailsFragment : Fragment() {
 
+    private lateinit var binding: FragmentDetailsBinding
+
+
 
     //Fragment animation setup
     init {
@@ -25,15 +28,14 @@ class DetailsFragment : Fragment() {
 
 
 
-    private var _binding: FragmentDetailsBinding? = null
-    private val binding get() = _binding!!
+
     lateinit var film: Film
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentDetailsBinding.inflate(inflater, container, false)
+        binding = FragmentDetailsBinding.inflate(inflater, container, false)
         val view = binding.root
         film = arguments?.get("film") as Film
 
@@ -53,7 +55,8 @@ class DetailsFragment : Fragment() {
     private fun detailsInit() {
         binding.detailsToolbar.title = film.title
         binding.detailsPoster.setImageResource(film.poster)
-        binding.detailsDescription.text = film.description
+        //binding.detailsDescription.text = film.description
+        binding.annotation = film.description
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
