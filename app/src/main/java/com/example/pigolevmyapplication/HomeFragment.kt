@@ -22,6 +22,10 @@ import java.util.*
 //@Suppress("DEPRECATION")
 class HomeFragment : Fragment() {
 
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
+
     //transition setup
     init {
         exitTransition = Fade(Fade.OUT).apply { duration = 800;mode = Fade.MODE_OUT }
@@ -30,6 +34,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var binding2: MergeHomeScreenContentBinding
+
 
     private lateinit var filmsAdapter: FilmListRecyclerAdapter
     private var filmDB = FilmDB.filmsDataBase
@@ -40,7 +45,9 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view=binding.root
+
         binding2 = MergeHomeScreenContentBinding.inflate(layoutInflater, binding.homeFragmentRoot, false)
+
 
 
         return view
@@ -48,7 +55,12 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val binding = FragmentHomeBinding.bind(view)
+        binding.mainRecycler.apply {
+
         binding2.mainRecycler.apply {
+
             filmsAdapter =
                 FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener {
 
@@ -73,12 +85,20 @@ class HomeFragment : Fragment() {
             TransitionManager.go(scene, customTransition)
         }
 
+
+        searchViewInit(binding)
+    //Setup searchView depending on scroll direction
+        binding.mainRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                binding.searchView.isVisible = dy >= 0
+
         searchViewInit(binding2)
         /*
         //Setup searchView depending on scroll direction
         binding2.mainRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                binding2.searchView.isVisible = dy >= 0
+
 
                 }
             }

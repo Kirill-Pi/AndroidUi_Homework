@@ -1,7 +1,6 @@
 package com.example.pigolevmyapplication
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.transition.AutoTransition
 import android.transition.Fade
@@ -10,18 +9,11 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pigolevmyapplication.databinding.FragmentDetailsBinding
-import com.example.pigolevmyapplication.databinding.FragmentHomeBinding
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
 
 class DetailsFragment : Fragment() {
+
 
     //Fragment animation setup
     init {
@@ -30,6 +22,7 @@ class DetailsFragment : Fragment() {
             duration = 800;mode = Fade.MODE_OUT
         }
     }
+
 
 
     private var _binding: FragmentDetailsBinding? = null
@@ -58,7 +51,6 @@ class DetailsFragment : Fragment() {
     }
 
     private fun detailsInit() {
-
         binding.detailsToolbar.title = film.title
         binding.detailsPoster.setImageResource(film.poster)
         binding.detailsDescription.text = film.description
