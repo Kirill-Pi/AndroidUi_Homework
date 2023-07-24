@@ -1,4 +1,4 @@
-package com.example.pigolevmyapplication
+package com.example.pigolevmyapplication.view.splashscreen
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,7 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 
 
 import android.os.*
-import android.view.WindowManager
+import com.example.pigolevmyapplication.R
+import com.example.pigolevmyapplication.view.MainActivity
 
 //Animation by Anastasiya Remeslova taken from https://lottiefiles.com
 

@@ -1,4 +1,4 @@
-package com.example.pigolevmyapplication
+package com.example.pigolevmyapplication.utils
 
 import android.app.Activity
 import android.view.View

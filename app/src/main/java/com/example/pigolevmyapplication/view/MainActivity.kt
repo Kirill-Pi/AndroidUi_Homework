@@ -1,10 +1,13 @@
-package com.example.pigolevmyapplication
+package com.example.pigolevmyapplication.view
 
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.pigolevmyapplication.R
 import com.example.pigolevmyapplication.databinding.ActivityMainBinding
+import com.example.pigolevmyapplication.domain.Film
+import com.example.pigolevmyapplication.view.fragments.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class MainActivity : AppCompatActivity() {
@@ -76,6 +79,7 @@ class MainActivity : AppCompatActivity() {
                     val tag = "favorites"
                     val fragment = checkFragmentExistence(tag)
                     changeFragment( fragment?: FavoritesFragment(), tag)
+
                     true
                 }
                 R.id.watch_later -> {

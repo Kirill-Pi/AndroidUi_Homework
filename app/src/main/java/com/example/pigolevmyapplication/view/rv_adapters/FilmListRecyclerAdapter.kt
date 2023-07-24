@@ -1,9 +1,13 @@
-package com.example.pigolevmyapplication
+package com.example.pigolevmyapplication.view.rv_adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pigolevmyapplication.R
+import com.example.pigolevmyapplication.domain.Film
+import com.example.pigolevmyapplication.domain.FilmDiff
+import com.example.pigolevmyapplication.view.rv_viewholders.FilmViewHolder
 
 class FilmListRecyclerAdapter(private val clickListener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var items = mutableListOf<Film>()

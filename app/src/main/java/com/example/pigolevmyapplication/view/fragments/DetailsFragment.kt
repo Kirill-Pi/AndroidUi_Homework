@@ -1,4 +1,4 @@
-package com.example.pigolevmyapplication
+package com.example.pigolevmyapplication.view.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.pigolevmyapplication.R
 import com.example.pigolevmyapplication.databinding.FragmentDetailsBinding
+import com.example.pigolevmyapplication.domain.Film
 
 class DetailsFragment : Fragment() {
 
