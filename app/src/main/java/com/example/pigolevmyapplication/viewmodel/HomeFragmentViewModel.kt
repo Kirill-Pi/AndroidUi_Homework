@@ -14,8 +14,18 @@ class HomeFragmentViewModel : ViewModel() {
 
 
     init {
-        val films = interactor.getFilmsDB()
-        filmsListLiveData.postValue(films)
+        interactor.getFilmsFromApi(1, object : ApiCallback {
+            override fun onSuccess(films: List<Film>) {
+                filmsListLiveData.postValue(films)
+            }
 
+            override fun onFailure() {
+            }
+        })
+    }
+
+    interface ApiCallback {
+        fun onSuccess(films: List<Film>)
+        fun onFailure()
     }
 }

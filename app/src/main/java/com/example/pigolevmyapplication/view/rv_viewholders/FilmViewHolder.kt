@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.pigolevmyapplication.ApiConstants
 import com.example.pigolevmyapplication.R
 import com.example.pigolevmyapplication.domain.Film
 import com.example.pigolevmyapplication.view.customviews.RatingDonutView
@@ -20,7 +21,7 @@ class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(film: Film) {
         title.text = film.title
         Glide.with(itemView)
-            .load(film.poster)
+            .load(ApiConstants.IMAGES_URL + "w342" + film.poster)
             .centerCrop()
             .into(poster)
         this.description.text = film.description

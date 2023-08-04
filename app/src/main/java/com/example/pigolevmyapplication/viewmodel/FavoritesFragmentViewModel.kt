@@ -12,10 +12,10 @@ class FavoritesFragmentViewModel : ViewModel() {
     var interactor: Interactor = App.instance.interactor
 
 
-    init {
+ /*   init {
         val favorites = interactor.getFavoritesDB ()
         filmsListLiveData.postValue(favorites)
-    }
+    }*/
 
 
 }

@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.example.pigolevmyapplication.ApiConstants
 import com.example.pigolevmyapplication.R
 import com.example.pigolevmyapplication.databinding.FragmentDetailsBinding
 import com.example.pigolevmyapplication.domain.Film
@@ -39,8 +41,10 @@ class DetailsFragment : Fragment() {
 
     private fun detailsInit() {
         binding.detailsToolbar.title = film.title
-        binding.detailsPoster.setImageResource(film.poster)
-        //binding.detailsDescription.text = film.description
+        Glide.with(this)
+            .load(ApiConstants.IMAGES_URL + "w780" + film.poster)
+            .centerCrop()
+            .into(binding.detailsPoster)
         binding.annotation = film.description
     }
 
