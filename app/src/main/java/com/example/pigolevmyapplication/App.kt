@@ -1,7 +1,9 @@
 package com.example.pigolevmyapplication
 
 import android.app.Application
+import com.example.pigolevmyapplication.data.ApiConstants
 import com.example.pigolevmyapplication.data.MainRepository
+import com.example.pigolevmyapplication.data.TmdbApi
 
 
 import com.example.pigolevmyapplication.domain.Interactor

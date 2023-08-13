@@ -1,4 +1,4 @@
-package com.example.pigolevmyapplication
+package com.example.pigolevmyapplication.data
 
 object ApiConstants {
     const val BASE_URL = "https://api.themoviedb.org/"

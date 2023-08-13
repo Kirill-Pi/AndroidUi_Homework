@@ -1,4 +1,4 @@
-package com.example.pigolevmyapplication
+package com.example.pigolevmyapplication.data
 
 import com.google.gson.annotations.SerializedName
 

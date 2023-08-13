@@ -1,14 +1,13 @@
 package com.example.pigolevmyapplication.domain
 
 import com.example.pigolevmyapplication.API
-import com.example.pigolevmyapplication.TmdbApi
-import com.example.pigolevmyapplication.TmdbResultsDto
 import com.example.pigolevmyapplication.data.MainRepository
+import com.example.pigolevmyapplication.data.TmdbApi
+import com.example.pigolevmyapplication.data.TmdbResultsDto
 import com.example.pigolevmyapplication.utils.Converter
 import com.example.pigolevmyapplication.viewmodel.HomeFragmentViewModel
 import retrofit2.Call
 import retrofit2.Callback
-
 import retrofit2.Response
 
 class Interactor(private val repo: MainRepository, private val retrofitService: TmdbApi) {
@@ -27,4 +26,6 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
             }
         })
     }
+
+
 }

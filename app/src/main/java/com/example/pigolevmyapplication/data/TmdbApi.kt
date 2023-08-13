@@ -1,4 +1,4 @@
-package com.example.pigolevmyapplication
+package com.example.pigolevmyapplication.data
 
 import retrofit2.Call
 import retrofit2.http.GET

@@ -1,10 +1,10 @@
 package com.example.pigolevmyapplication.utils
 
-import com.example.pigolevmyapplication.TmdbFilm
+import com.example.pigolevmyapplication.data.TmdbFilm
 import com.example.pigolevmyapplication.domain.Film
 
 object Converter {
-    fun convertApiListToDtoList(list: List<TmdbFilm>?): List<Film> {
+    fun convertApiListToDtoList(list: List<TmdbFilm>?): MutableList<Film> {
         val result = mutableListOf<Film>()
         list?.forEach {
             result.add(Film(

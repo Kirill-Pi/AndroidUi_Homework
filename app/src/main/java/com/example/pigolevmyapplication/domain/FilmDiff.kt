@@ -1,7 +1,6 @@
 package com.example.pigolevmyapplication.domain
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.pigolevmyapplication.domain.Film
 
 class FilmDiff(val oldList: MutableList <Film>, val newList: MutableList <Film> ): DiffUtil.Callback() {
     override fun getOldListSize(): Int {

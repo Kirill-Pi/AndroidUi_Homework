@@ -11,12 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pigolevmyapplication.databinding.FragmentFavoritesBinding
 import com.example.pigolevmyapplication.domain.Film
 import com.example.pigolevmyapplication.utils.AnimationHelper
-import com.example.pigolevmyapplication.data.MainRepository
-import com.example.pigolevmyapplication.view.rv_adapters.FilmListRecyclerAdapter
 import com.example.pigolevmyapplication.view.MainActivity
+import com.example.pigolevmyapplication.view.rv_adapters.FilmListRecyclerAdapter
 import com.example.pigolevmyapplication.view.rv_adapters.TopSpacingItemDecoration
 import com.example.pigolevmyapplication.viewmodel.FavoritesFragmentViewModel
-import com.example.pigolevmyapplication.viewmodel.HomeFragmentViewModel
 
 class FavoritesFragment : Fragment() {
 
