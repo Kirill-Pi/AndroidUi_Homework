@@ -9,7 +9,7 @@ import com.example.pigolevmyapplication.domain.Interactor
 class FavoritesFragmentViewModel : ViewModel() {
     val filmsListLiveData: MutableLiveData<MutableList<Film>> = MutableLiveData()
     //Инициализируем интерактор
-    var interactor: Interactor = App.instance.interactor
+    //var interactor: Interactor = App.instance.interactor
  /*   init {
         val favorites = interactor.getFavoritesDB ()
         filmsListLiveData.postValue(favorites)
