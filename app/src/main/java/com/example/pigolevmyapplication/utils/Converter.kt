@@ -15,6 +15,7 @@ object Converter {
                 isInFavorites = false
             ))
         }
+        result.forEach { println(it.title) }
         return result
     }
 }

@@ -6,15 +6,19 @@ import androidx.lifecycle.ViewModel
 import com.example.pigolevmyapplication.App
 import com.example.pigolevmyapplication.domain.Film
 import com.example.pigolevmyapplication.domain.Interactor
+import javax.inject.Inject
 
 class HomeFragmentViewModel : ViewModel() {
     val filmsListLiveData: MutableLiveData<MutableList<Film>> = MutableLiveData()
     //Инициализируем интерактор
-    var interactor: Interactor = App.instance.interactor
+    //Инициализируем интерактор
+    @Inject
+    lateinit var interactor: Interactor
     var currentPage = 1
     var isLoaded = false
     lateinit var tempFilmData :  MutableList<Film>
     init {
+        App.instance.dagger.inject(this)
         interactorStart()
     }
 
@@ -37,8 +41,8 @@ class HomeFragmentViewModel : ViewModel() {
     fun interactorStart(){
         interactor.getFilmsFromApi(currentPage, object : ApiCallback {
             override fun onSuccess(films: MutableList<Film>) {
-                tempFilmData = films
-                //tempFilmData.forEach { println(it.title) }
+                //tempFilmData = films
+               films.forEach { println(it.title) }
                 filmsListLiveData.postValue(films)
             }
             override fun onFailure() {
