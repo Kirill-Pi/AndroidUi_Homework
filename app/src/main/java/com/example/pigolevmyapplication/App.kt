@@ -6,6 +6,9 @@ import com.example.pigolevmyapplication.data.MainRepository
 import com.example.pigolevmyapplication.data.TmdbApi
 import com.example.pigolevmyapplication.di.AppComponent
 import com.example.pigolevmyapplication.di.DaggerAppComponent
+import com.example.pigolevmyapplication.di.modules.DatabaseModule
+import com.example.pigolevmyapplication.di.modules.DomainModule
+import com.example.pigolevmyapplication.di.modules.RemoteModule
 
 
 import com.example.pigolevmyapplication.domain.Interactor
@@ -22,8 +25,13 @@ class App : Application() {
         super.onCreate()
         instance = this
         //Создаем компонент
-        dagger = DaggerAppComponent.create()
+        dagger = DaggerAppComponent.builder()
+            .remoteModule(RemoteModule())
+            .databaseModule(DatabaseModule())
+            .domainModule(DomainModule(this))
+            .build()
     }
+
 
     companion object {
         lateinit var instance: App

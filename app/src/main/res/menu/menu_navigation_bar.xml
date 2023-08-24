@@ -20,5 +20,10 @@
         android:icon="@drawable/baseline_video_library_24"
         android:title="@string/menu_library"
         app:showAsAction="withText" />
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/baseline_settings_suggest_24"
+        android:title="@string/menu_library"
+        app:showAsAction="withText" />
 
 </menu>

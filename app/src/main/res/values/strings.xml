@@ -3,9 +3,15 @@
     <string name="menu_favorites_title">ИЗБРАННОЕ</string>
     <string name="menu_watch_later_title">ОТЛОЖИТЬ</string>
     <string name="menu_library">ПОДБОРКИ</string>
+    <string name="menu_settings">НАСТРОЙКИ</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="menu_home_title_text">ГЛАВНАЯ</string>
     <string name="animation_description">Animation by Anastasiya Remeslova taken from https://lottiefiles.com</string>
-
+    <string name="menu_settings_title_text">Настройки</string>
+    <string name="radio_button_popular">Популярные</string>
+    <string name="radio_button_top_rated">Топ</string>
+    <string name="radio_button_upcoming">Скоро</string>
+    <string name="radio_button_playing">В кинотеатрах</string>
+    <string name="radio_group_header">Подборка на главном экране:</string>
 
 </resources>

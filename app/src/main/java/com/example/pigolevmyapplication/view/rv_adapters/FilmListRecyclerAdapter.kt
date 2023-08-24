@@ -10,7 +10,7 @@ import com.example.pigolevmyapplication.domain.FilmDiff
 import com.example.pigolevmyapplication.view.rv_viewholders.FilmViewHolder
 
 class FilmListRecyclerAdapter(private val clickListener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var items = mutableListOf<Film>()
+    var items = mutableListOf<Film>()
     override fun getItemCount() = items.size
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return FilmViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.film_item, parent, false))

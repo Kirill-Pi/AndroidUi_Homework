@@ -19,13 +19,13 @@ class HomeFragmentViewModel : ViewModel() {
     lateinit var tempFilmData :  MutableList<Film>
     init {
         App.instance.dagger.inject(this)
-        interactorStart()
+        getFilms()
     }
 
-    fun nextPaqe() {
+  fun nextPaqe() {
      //Загружаем следующую страницу
         currentPage++
-        interactorStart()
+        getFilms()
         isLoaded = true
     }
 
@@ -33,12 +33,23 @@ class HomeFragmentViewModel : ViewModel() {
     //Загружаем предыдущую страницу
         if (currentPage > 1){
             currentPage --
-            interactorStart()
+            getFilms()
         }
     }
 
+    fun getFilms() {
+        interactor.getFilmsFromApi(1, object : ApiCallback {
+            override fun onSuccess(films: MutableList<Film>) {
+                filmsListLiveData.postValue(films)
+            }
 
-    fun interactorStart(){
+            override fun onFailure() {
+            }
+        })
+    }
+
+
+   /* fun interactorStart(){
         interactor.getFilmsFromApi(currentPage, object : ApiCallback {
             override fun onSuccess(films: MutableList<Film>) {
                 //tempFilmData = films
@@ -48,7 +59,7 @@ class HomeFragmentViewModel : ViewModel() {
             override fun onFailure() {
             }
         })
-    }
+    }*/
 
     interface ApiCallback {
         fun onSuccess(films: MutableList<Film>)

@@ -62,8 +62,10 @@ class HomeFragment : Fragment() {
             addItemDecoration(decorator)
             val filmObserver = Observer<MutableList<Film>> {
                 filmsDataBase = it
+                filmsAdapter.addItems(it)
             }
             viewModel.filmsListLiveData.observe(viewLifecycleOwner, filmObserver)
+            initPullToRefresh()
 
 
 
@@ -90,7 +92,7 @@ class HomeFragment : Fragment() {
                 }
                 if (firstVisibleItemPosition == 0 && !canScrollUp && !isLoaded){
                     //Вызываем загрузку предыдущей страницы при достижении начала списка
-                    viewModel.previousPage()
+                   viewModel.previousPage()
                     isLoaded = true
                 }
             }
@@ -128,6 +130,18 @@ class HomeFragment : Fragment() {
                 return true
             }
         })
+    }
+
+    private fun initPullToRefresh() {
+        //Вешаем слушатель, чтобы вызвался pull to refresh
+        binding.pullToRefresh.setOnRefreshListener {
+            //Чистим адаптер(items нужно будет сделать паблик или создать для этого публичный метод)
+            filmsAdapter.items.clear()
+            //Делаем новый запрос фильмов на сервер
+            viewModel.getFilms()
+            //Убираем крутящееся колечко
+            binding.pullToRefresh.isRefreshing = false
+        }
     }
 }
 
