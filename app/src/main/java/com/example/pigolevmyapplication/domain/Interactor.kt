@@ -39,4 +39,6 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
     fun getDefaultCategoryFromPreferences() = preferences.getDefaultCategory()
 
     fun getFilmsFromDB(): MutableList<Film> = repo.getAllFromDB()
+
+    //fun getFilmsByNameFromDB(name : String): MutableList<Film> = repo.getByNameFromDB()
 }

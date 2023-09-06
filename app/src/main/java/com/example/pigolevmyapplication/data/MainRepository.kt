@@ -45,4 +45,33 @@ class MainRepository(databaseHelper: DatabaseHelper) {
         //Возвращаем список фильмов
         return result
     }
+
+   fun getByNameFromDB(name: String) : MutableList<Film>{
+        //Создаем курсор на основании запроса "Получить фильм по названию"
+        cursor = sqlDb.rawQuery("SELECT * FROM ${DatabaseHelper.TABLE_NAME} WHERE ${DatabaseHelper.COLUMN_TITLE} = ?" ,
+            arrayOf(name)
+        )
+        //Сюда будем сохранять результат получения данных
+        val result = mutableListOf<Film>()
+        //Проверяем, есть ли хоть одна строка в ответе на запрос
+        if (cursor.moveToFirst()) {
+            //Итерируемся по таблице, пока есть записи, и создаем на основании объект Film
+            do {
+                val title = cursor.getString(1)
+                val poster = cursor.getString(2)
+                val description = cursor.getString(3)
+                val rating = cursor.getDouble(4)
+
+                result.add(Film(title, poster, description, rating))
+            } while (cursor.moveToNext())
+        }
+        //Возвращаем список фильмов
+        return result
+    }
+
+    fun deleteById(_id: Int){
+        //удаление по строке
+        sqlDb.delete(DatabaseHelper.TABLE_NAME, DatabaseHelper.COLUMN_ID+"=" + _id, null)
+    }
+
 }
