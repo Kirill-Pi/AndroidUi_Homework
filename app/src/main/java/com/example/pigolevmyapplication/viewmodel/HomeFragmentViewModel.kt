@@ -4,8 +4,9 @@ package com.example.pigolevmyapplication.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.pigolevmyapplication.App
-import com.example.pigolevmyapplication.domain.Film
+import com.example.pigolevmyapplication.data.entity.Film
 import com.example.pigolevmyapplication.domain.Interactor
+import java.util.concurrent.Executors
 import javax.inject.Inject
 
 class HomeFragmentViewModel : ViewModel() {
@@ -40,7 +41,9 @@ class HomeFragmentViewModel : ViewModel() {
     fun getFilms() {
         interactor.getFilmsFromApi(1, object : ApiCallback {
             override fun onSuccess(films: MutableList<Film>) {
-                filmsListLiveData.postValue(films)
+                Executors.newSingleThreadExecutor().execute {
+                    filmsListLiveData.postValue(interactor.getFilmsFromDB())
+                }
             }
 
             override fun onFailure() {

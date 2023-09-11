@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pigolevmyapplication.R
-import com.example.pigolevmyapplication.domain.Film
+import com.example.pigolevmyapplication.data.entity.Film
 import com.example.pigolevmyapplication.domain.FilmDiff
 import com.example.pigolevmyapplication.view.rv_viewholders.FilmViewHolder
 

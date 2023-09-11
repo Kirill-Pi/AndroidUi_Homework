@@ -2,9 +2,7 @@ package com.example.pigolevmyapplication.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.pigolevmyapplication.App
-import com.example.pigolevmyapplication.domain.Film
-import com.example.pigolevmyapplication.domain.Interactor
+import com.example.pigolevmyapplication.data.entity.Film
 
 class FavoritesFragmentViewModel : ViewModel() {
     val filmsListLiveData: MutableLiveData<MutableList<Film>> = MutableLiveData()

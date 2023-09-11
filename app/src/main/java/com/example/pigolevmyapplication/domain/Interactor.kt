@@ -5,6 +5,7 @@ import com.example.pigolevmyapplication.data.MainRepository
 import com.example.pigolevmyapplication.data.PreferenceProvider
 import com.example.pigolevmyapplication.data.TmdbApi
 import com.example.pigolevmyapplication.data.TmdbResultsDto
+import com.example.pigolevmyapplication.data.entity.Film
 import com.example.pigolevmyapplication.utils.Converter
 import com.example.pigolevmyapplication.viewmodel.HomeFragmentViewModel
 import retrofit2.Call
@@ -19,9 +20,10 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
                 //При успехе мы вызываем метод, передаем onSuccess и в этот коллбэк список фильмов
                 val list = Converter.convertApiListToDtoList(response.body()?.tmdbFilms)
                 //Кладем фильмы в бд
-                list.forEach {
-                    repo.putToDb(film = it)
-                }
+               // list.forEach {
+               //     repo.putToDb(list)
+                //}
+                repo.putToDb(list)
                 callback.onSuccess(list)
             }
 

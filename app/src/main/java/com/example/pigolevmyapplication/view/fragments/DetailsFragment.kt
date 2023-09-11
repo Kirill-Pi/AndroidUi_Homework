@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.pigolevmyapplication.R
 import com.example.pigolevmyapplication.data.ApiConstants
 import com.example.pigolevmyapplication.databinding.FragmentDetailsBinding
-import com.example.pigolevmyapplication.domain.Film
+import com.example.pigolevmyapplication.data.entity.Film
 
 class DetailsFragment : Fragment() {
 

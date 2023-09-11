@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pigolevmyapplication.databinding.FragmentHomeBinding
-import com.example.pigolevmyapplication.domain.Film
+import com.example.pigolevmyapplication.data.entity.Film
 import com.example.pigolevmyapplication.utils.AnimationHelper
 import com.example.pigolevmyapplication.view.MainActivity
 import com.example.pigolevmyapplication.view.rv_adapters.FilmListRecyclerAdapter
