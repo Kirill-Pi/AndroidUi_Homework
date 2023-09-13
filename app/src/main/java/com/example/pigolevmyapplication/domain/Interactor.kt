@@ -1,5 +1,6 @@
 package com.example.pigolevmyapplication.domain
 
+import androidx.lifecycle.LiveData
 import com.example.pigolevmyapplication.API
 import com.example.pigolevmyapplication.data.MainRepository
 import com.example.pigolevmyapplication.data.PreferenceProvider
@@ -24,7 +25,7 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
                //     repo.putToDb(list)
                 //}
                 repo.putToDb(list)
-                callback.onSuccess(list)
+                callback.onSuccess()
             }
 
             override fun onFailure(call: Call<TmdbResultsDto>, t: Throwable) {
@@ -40,7 +41,7 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
     //Метод для получения настроек
     fun getDefaultCategoryFromPreferences() = preferences.getDefaultCategory()
 
-    fun getFilmsFromDB(): MutableList<Film> = repo.getAllFromDB()
+    fun getFilmsFromDB(): LiveData<MutableList<Film>> = repo.getAllFromDB()
 
     //fun getFilmsByNameFromDB(name : String): MutableList<Film> = repo.getByNameFromDB()
 }

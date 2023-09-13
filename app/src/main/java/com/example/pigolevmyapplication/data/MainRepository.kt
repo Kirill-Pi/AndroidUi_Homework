@@ -1,5 +1,6 @@
 package com.example.pigolevmyapplication.data
 
+import androidx.lifecycle.LiveData
 import com.example.pigolevmyapplication.data.dao.FilmDao
 import com.example.pigolevmyapplication.data.entity.Film
 import java.util.concurrent.Executors
@@ -13,7 +14,5 @@ class MainRepository(private val filmDao: FilmDao) {
         }
     }
 
-    fun getAllFromDB(): MutableList<Film> {
-        return filmDao.getCachedFilms()
-    }
+    fun getAllFromDB(): LiveData<MutableList<Film>> = filmDao.getCachedFilms()
 }

@@ -1,6 +1,7 @@
 package com.example.pigolevmyapplication.viewmodel
 
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.pigolevmyapplication.App
@@ -10,16 +11,19 @@ import java.util.concurrent.Executors
 import javax.inject.Inject
 
 class HomeFragmentViewModel : ViewModel() {
-    val filmsListLiveData: MutableLiveData<MutableList<Film>> = MutableLiveData()
+
     //Инициализируем интерактор
     //Инициализируем интерактор
     @Inject
     lateinit var interactor: Interactor
+    val filmsListLiveData: LiveData<MutableList<Film>>
     var currentPage = 1
     var isLoaded = false
+    val showProgressBar: MutableLiveData<Boolean> = MutableLiveData()
     lateinit var tempFilmData :  MutableList<Film>
     init {
         App.instance.dagger.inject(this)
+        filmsListLiveData = interactor.getFilmsFromDB()
         getFilms()
     }
 
@@ -39,15 +43,14 @@ class HomeFragmentViewModel : ViewModel() {
     }
 
     fun getFilms() {
-        interactor.getFilmsFromApi(1, object : ApiCallback {
-            override fun onSuccess(films: MutableList<Film>) {
-                Executors.newSingleThreadExecutor().execute {
-                    filmsListLiveData.postValue(interactor.getFilmsFromDB())
-                }
+        showProgressBar.postValue(true)
+        interactor.getFilmsFromApi(currentPage, object : ApiCallback {
+            override fun onSuccess() {
+                showProgressBar.postValue(false)
             }
 
             override fun onFailure() {
-                filmsListLiveData.postValue(interactor.getFilmsFromDB())
+                showProgressBar.postValue(false)
             }
         })
     }
@@ -66,7 +69,7 @@ class HomeFragmentViewModel : ViewModel() {
     }*/
 
     interface ApiCallback {
-        fun onSuccess(films: MutableList<Film>)
+        fun onSuccess()
         fun onFailure()
     }
 }
