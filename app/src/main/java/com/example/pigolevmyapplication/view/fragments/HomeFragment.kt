@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -71,9 +72,10 @@ class HomeFragment : Fragment() {
             viewModel.showProgressBar.observe(viewLifecycleOwner, Observer<Boolean> {
                 binding.progressBar.isVisible = it
             })
-
-
-
+            //Вызываем Toast в случае ошибки
+            viewModel.errorEvent.observe(viewLifecycleOwner, Observer{
+                Toast.makeText(context ,it, Toast.LENGTH_SHORT).show()
+            })
         }
 
         searchViewInit(binding)
@@ -93,7 +95,6 @@ class HomeFragment : Fragment() {
                  //Вызываем загрузку следующей страницы при достижении конца списка
                     && firstVisibleItemPosition >= 0) {
                     viewModel.nextPaqe()
-
                 }
                 if (firstVisibleItemPosition == 0 && !canScrollUp && !isLoaded){
                     //Вызываем загрузку предыдущей страницы при достижении начала списка

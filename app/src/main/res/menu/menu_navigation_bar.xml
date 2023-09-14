@@ -23,7 +23,7 @@
     <item
         android:id="@+id/settings"
         android:icon="@drawable/baseline_settings_suggest_24"
-        android:title="@string/menu_library"
+        android:title="@string/menu_settings"
         app:showAsAction="withText" />
 
 </menu>

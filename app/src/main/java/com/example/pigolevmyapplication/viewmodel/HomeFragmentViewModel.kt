@@ -7,19 +7,20 @@ import androidx.lifecycle.ViewModel
 import com.example.pigolevmyapplication.App
 import com.example.pigolevmyapplication.data.entity.Film
 import com.example.pigolevmyapplication.domain.Interactor
-import java.util.concurrent.Executors
+import com.example.pigolevmyapplication.utils.SingleLiveEvent
 import javax.inject.Inject
 
 class HomeFragmentViewModel : ViewModel() {
 
     //Инициализируем интерактор
-    //Инициализируем интерактор
+
     @Inject
     lateinit var interactor: Interactor
     val filmsListLiveData: LiveData<MutableList<Film>>
     var currentPage = 1
     var isLoaded = false
     val showProgressBar: MutableLiveData<Boolean> = MutableLiveData()
+    val errorEvent = SingleLiveEvent <String>()
     lateinit var tempFilmData :  MutableList<Film>
     init {
         App.instance.dagger.inject(this)
@@ -51,6 +52,8 @@ class HomeFragmentViewModel : ViewModel() {
 
             override fun onFailure() {
                 showProgressBar.postValue(false)
+                //Передаем сообщение об ошибке
+                errorEvent.postValue("Нет Интернет соединения")
             }
         })
     }
@@ -73,3 +76,4 @@ class HomeFragmentViewModel : ViewModel() {
         fun onFailure()
     }
 }
+
