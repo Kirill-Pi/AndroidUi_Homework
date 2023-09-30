@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.pigolevmyapplication.databinding.FragmentFavoritesBinding
 import com.example.pigolevmyapplication.data.entity.Film
+import com.example.pigolevmyapplication.databinding.FragmentFavoritesBinding
 import com.example.pigolevmyapplication.utils.AnimationHelper
 import com.example.pigolevmyapplication.view.MainActivity
 import com.example.pigolevmyapplication.view.rv_adapters.FilmListRecyclerAdapter

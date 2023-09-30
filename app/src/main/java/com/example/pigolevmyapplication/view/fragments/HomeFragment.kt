@@ -4,21 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pigolevmyapplication.databinding.FragmentHomeBinding
 import com.example.pigolevmyapplication.data.entity.Film
+import com.example.pigolevmyapplication.databinding.FragmentHomeBinding
 import com.example.pigolevmyapplication.utils.AnimationHelper
 import com.example.pigolevmyapplication.view.MainActivity
 import com.example.pigolevmyapplication.view.rv_adapters.FilmListRecyclerAdapter
 import com.example.pigolevmyapplication.view.rv_adapters.TopSpacingItemDecoration
 import com.example.pigolevmyapplication.viewmodel.HomeFragmentViewModel
+import kotlinx.coroutines.*
 import java.util.*
 
 
@@ -28,7 +27,10 @@ class HomeFragment : Fragment() {
     }
     private lateinit var binding: FragmentHomeBinding
     private lateinit var filmsAdapter: FilmListRecyclerAdapter
+    private lateinit var scope: CoroutineScope
     private var filmsDataBase = mutableListOf<Film>()
+
+
         //Используем backing field
        set(value) {
             //Если придет такое же значение, то мы выходим из метода
@@ -53,7 +55,6 @@ class HomeFragment : Fragment() {
         binding.mainRecycler.apply {
             filmsAdapter =
                 FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener {
-
                     override fun click(film: Film) {
                         (requireActivity() as MainActivity).launchDetailsFragment(film)
                     }
@@ -62,20 +63,28 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             val decorator = TopSpacingItemDecoration(8)
             addItemDecoration(decorator)
-            val filmObserver = Observer<MutableList<Film>> {
-                filmsDataBase = it
-                filmsAdapter.addItems(it)
-            }
-            viewModel.filmsListLiveData.observe(viewLifecycleOwner, filmObserver)
-            initPullToRefresh()
 
-            viewModel.showProgressBar.observe(viewLifecycleOwner, Observer<Boolean> {
-                binding.progressBar.isVisible = it
-            })
-            //Вызываем Toast в случае ошибки
-            viewModel.errorEvent.observe(viewLifecycleOwner, Observer{
-                Toast.makeText(context ,it, Toast.LENGTH_SHORT).show()
-            })
+            scope = CoroutineScope(Dispatchers.IO).also { scope ->
+                //Загружаем фильмы
+                scope.launch {
+                    viewModel.filmsListData.collect {
+                        withContext(Dispatchers.Main) {
+                            filmsAdapter.addItems(it)
+                            filmsDataBase = it
+                        }
+                    }
+                }
+                //Запускаем progress bar
+                scope.launch {
+                    for (element in viewModel.showProgressBar) {
+                        launch(Dispatchers.Main) {
+                            binding.progressBar.isVisible = element
+                        }
+                    }
+                }
+
+            }
+
         }
 
         searchViewInit(binding)
@@ -111,6 +120,13 @@ class HomeFragment : Fragment() {
             }
         )
         AnimationHelper.performFragmentCircularRevealAnimation(binding.homeFragmentRoot, requireActivity(), 1)
+
+
+    }
+
+    override fun onStop () {
+        super.onStop()
+        scope.cancel()
     }
 
     private fun searchViewInit(binding: FragmentHomeBinding) {

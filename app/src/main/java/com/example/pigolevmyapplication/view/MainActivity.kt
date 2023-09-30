@@ -5,8 +5,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.pigolevmyapplication.R
-import com.example.pigolevmyapplication.databinding.ActivityMainBinding
 import com.example.pigolevmyapplication.data.entity.Film
+import com.example.pigolevmyapplication.databinding.ActivityMainBinding
 import com.example.pigolevmyapplication.view.fragments.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 

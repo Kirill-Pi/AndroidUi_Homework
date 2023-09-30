@@ -1,13 +1,13 @@
 package com.example.pigolevmyapplication.viewmodel
 
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.pigolevmyapplication.App
 import com.example.pigolevmyapplication.data.entity.Film
 import com.example.pigolevmyapplication.domain.Interactor
 import com.example.pigolevmyapplication.utils.SingleLiveEvent
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class HomeFragmentViewModel : ViewModel() {
@@ -16,15 +16,17 @@ class HomeFragmentViewModel : ViewModel() {
 
     @Inject
     lateinit var interactor: Interactor
-    val filmsListLiveData: LiveData<MutableList<Film>>
+    val filmsListData: Flow<MutableList<Film>>
+    val showProgressBar : Channel <Boolean>
     var currentPage = 1
     var isLoaded = false
-    val showProgressBar: MutableLiveData<Boolean> = MutableLiveData()
+
     val errorEvent = SingleLiveEvent <String>()
     lateinit var tempFilmData :  MutableList<Film>
     init {
         App.instance.dagger.inject(this)
-        filmsListLiveData = interactor.getFilmsFromDB()
+        showProgressBar = interactor.progressBarState
+        filmsListData = interactor.getFilmsFromDB()
         getFilms()
     }
 
@@ -44,18 +46,8 @@ class HomeFragmentViewModel : ViewModel() {
     }
 
     fun getFilms() {
-        showProgressBar.postValue(true)
-        interactor.getFilmsFromApi(currentPage, object : ApiCallback {
-            override fun onSuccess() {
-                showProgressBar.postValue(false)
-            }
 
-            override fun onFailure() {
-                showProgressBar.postValue(false)
-                //Передаем сообщение об ошибке
-                errorEvent.postValue("Нет Интернет соединения")
-            }
-        })
+        interactor.getFilmsFromApi(currentPage)
     }
 
 

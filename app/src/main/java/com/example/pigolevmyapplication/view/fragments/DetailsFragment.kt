@@ -15,11 +15,12 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.pigolevmyapplication.R
 import com.example.pigolevmyapplication.data.ApiConstants
-import com.example.pigolevmyapplication.databinding.FragmentDetailsBinding
 import com.example.pigolevmyapplication.data.entity.Film
+import com.example.pigolevmyapplication.databinding.FragmentDetailsBinding
 import com.example.pigolevmyapplication.viewmodel.DetailsFragmentViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
@@ -29,6 +30,10 @@ class DetailsFragment : Fragment() {
     private lateinit var binding: FragmentDetailsBinding
 
     lateinit var film: Film
+
+    private val viewModel by lazy {
+        ViewModelProvider.NewInstanceFactory().create(DetailsFragmentViewModel::class.java)
+    }
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
@@ -169,7 +174,7 @@ class DetailsFragment : Fragment() {
             binding.progressBar.isVisible = true
             //Создаем через async, так как нам нужен результат от работы, то есть Bitmap
             val job = scope.async {
-                DetailsFragmentViewModel.loadWallpaper(ApiConstants.IMAGES_URL + "original" + film.poster)
+                viewModel.loadWallpaper(ApiConstants.IMAGES_URL + "original" + film.poster)
 
             }
             //Сохраняем в галерею, как только файл загрузится
