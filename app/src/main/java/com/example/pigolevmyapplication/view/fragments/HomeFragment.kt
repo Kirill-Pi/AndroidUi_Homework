@@ -13,11 +13,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pigolevmyapplication.data.entity.Film
 import com.example.pigolevmyapplication.databinding.FragmentHomeBinding
 import com.example.pigolevmyapplication.utils.AnimationHelper
+import com.example.pigolevmyapplication.utils.AutoDisposable
+import com.example.pigolevmyapplication.utils.addTo
 import com.example.pigolevmyapplication.view.MainActivity
 import com.example.pigolevmyapplication.view.rv_adapters.FilmListRecyclerAdapter
 import com.example.pigolevmyapplication.view.rv_adapters.TopSpacingItemDecoration
 import com.example.pigolevmyapplication.viewmodel.HomeFragmentViewModel
-import kotlinx.coroutines.*
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.*
 
 
@@ -27,7 +30,8 @@ class HomeFragment : Fragment() {
     }
     private lateinit var binding: FragmentHomeBinding
     private lateinit var filmsAdapter: FilmListRecyclerAdapter
-    private lateinit var scope: CoroutineScope
+    private val autoDisposable = AutoDisposable()
+
     private var filmsDataBase = mutableListOf<Film>()
 
 
@@ -40,6 +44,12 @@ class HomeFragment : Fragment() {
             //Обновляем RV адаптер
             filmsAdapter.updateItems(field)
         }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        autoDisposable.bindTo(lifecycle)
+        retainInstance = true
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,28 +74,27 @@ class HomeFragment : Fragment() {
             val decorator = TopSpacingItemDecoration(8)
             addItemDecoration(decorator)
 
-            scope = CoroutineScope(Dispatchers.IO).also { scope ->
-                //Загружаем фильмы
-                scope.launch {
-                    viewModel.filmsListData.collect {
-                        withContext(Dispatchers.Main) {
-                            filmsAdapter.addItems(it)
-                            filmsDataBase = it
-                        }
-                    }
-                }
-                //Запускаем progress bar
-                scope.launch {
-                    for (element in viewModel.showProgressBar) {
-                        launch(Dispatchers.Main) {
-                            binding.progressBar.isVisible = element
-                        }
-                    }
-                }
 
-            }
-
+            viewModel.filmsListData
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { list ->
+                    filmsAdapter.addItems(list)
+                    filmsDataBase = list
+                }
+                .addTo(autoDisposable)
+            viewModel.showProgressBar
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    binding.progressBar.isVisible = it
+                }
+                .addTo(autoDisposable)
         }
+
+
+
+
 
         searchViewInit(binding)
 
@@ -124,10 +133,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    override fun onStop () {
-        super.onStop()
-        scope.cancel()
-    }
+
 
     private fun searchViewInit(binding: FragmentHomeBinding) {
         binding.searchView.setOnClickListener {

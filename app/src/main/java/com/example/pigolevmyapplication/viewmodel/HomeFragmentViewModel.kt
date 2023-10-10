@@ -6,8 +6,8 @@ import com.example.pigolevmyapplication.App
 import com.example.pigolevmyapplication.data.entity.Film
 import com.example.pigolevmyapplication.domain.Interactor
 import com.example.pigolevmyapplication.utils.SingleLiveEvent
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import javax.inject.Inject
 
 class HomeFragmentViewModel : ViewModel() {
@@ -16,8 +16,8 @@ class HomeFragmentViewModel : ViewModel() {
 
     @Inject
     lateinit var interactor: Interactor
-    val filmsListData: Flow<MutableList<Film>>
-    val showProgressBar : Channel <Boolean>
+    val filmsListData: Observable<MutableList<Film>>
+    val showProgressBar : BehaviorSubject<Boolean>
     var currentPage = 1
     var isLoaded = false
 
@@ -51,21 +51,5 @@ class HomeFragmentViewModel : ViewModel() {
     }
 
 
-   /* fun interactorStart(){
-        interactor.getFilmsFromApi(currentPage, object : ApiCallback {
-            override fun onSuccess(films: MutableList<Film>) {
-                //tempFilmData = films
-               films.forEach { println(it.title) }
-                filmsListLiveData.postValue(films)
-            }
-            override fun onFailure() {
-            }
-        })
-    }*/
-
-    interface ApiCallback {
-        fun onSuccess()
-        fun onFailure()
-    }
 }
 
