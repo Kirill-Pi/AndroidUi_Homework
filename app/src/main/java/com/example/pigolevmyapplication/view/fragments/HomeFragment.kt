@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -20,8 +21,12 @@ import com.example.pigolevmyapplication.view.rv_adapters.FilmListRecyclerAdapter
 import com.example.pigolevmyapplication.view.rv_adapters.TopSpacingItemDecoration
 import com.example.pigolevmyapplication.viewmodel.HomeFragmentViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableOnSubscribe
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 class HomeFragment : Fragment() {
@@ -31,9 +36,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var filmsAdapter: FilmListRecyclerAdapter
     private val autoDisposable = AutoDisposable()
-
     private var filmsDataBase = mutableListOf<Film>()
-
 
         //Используем backing field
        set(value) {
@@ -73,8 +76,6 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             val decorator = TopSpacingItemDecoration(8)
             addItemDecoration(decorator)
-
-
             viewModel.filmsListData
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -91,10 +92,6 @@ class HomeFragment : Fragment() {
                 }
                 .addTo(autoDisposable)
         }
-
-
-
-
 
         searchViewInit(binding)
 
@@ -116,7 +113,7 @@ class HomeFragment : Fragment() {
                 }
                 if (firstVisibleItemPosition == 0 && !canScrollUp && !isLoaded){
                     //Вызываем загрузку предыдущей страницы при достижении начала списка
-                   viewModel.previousPage()
+                    viewModel.previousPage()
                     isLoaded = true
                 }
             }
@@ -129,35 +126,60 @@ class HomeFragment : Fragment() {
             }
         )
         AnimationHelper.performFragmentCircularRevealAnimation(binding.homeFragmentRoot, requireActivity(), 1)
-
-
     }
 
 
 
     private fun searchViewInit(binding: FragmentHomeBinding) {
+
         binding.searchView.setOnClickListener {
             binding.searchView.isIconified = false
         }
-        binding.searchView.setOnQueryTextListener(object : OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
-            }
-            override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText?.isEmpty() == true) {
-                    filmsAdapter.updateItems(filmsDataBase.toMutableList())
-                    return true
-                }
-                val result = filmsDataBase.filter {
+        Observable.create(ObservableOnSubscribe<String> { subscriber ->
+                //Вешаем слушатель на клавиатуру
+                binding.searchView.setOnQueryTextListener(object :
+                //Вызывается на ввод символов
+                    OnQueryTextListener {
+                    override fun onQueryTextChange(newText: String): Boolean {
+                        filmsAdapter.items.clear()
+                        subscriber.onNext(newText)
+                        return false
+                    }
 
-                    it.title.lowercase(Locale.getDefault()).contains(
-                        newText?.lowercase(Locale.getDefault())!!
-                    )
+                    //Вызывается по нажатию кнопки "Поиск"
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        subscriber.onNext(query)
+                        return false
+                    }
+                })
+            })
+                .subscribeOn(Schedulers.io())
+                .map {
+                    it.lowercase(Locale.getDefault()).trim()
                 }
-                filmsAdapter.updateItems(result.toMutableList())
-                return true
-            }
-        })
+                .debounce(800, TimeUnit.MILLISECONDS)
+                .filter {
+                    //Если в поиске пустое поле, возвращаем список фильмов по умолчанию
+                    viewModel.getFilms()
+                    it.isNotBlank()
+                }
+                .flatMap {
+                    viewModel.getSearchResult(it, 1)
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                    onError = {
+                        Toast.makeText(requireContext(), "Что-то пошло не так", Toast.LENGTH_SHORT)
+                            .show()
+                    },
+                    onNext = {
+                        filmsAdapter.updateItems(it)
+                    }
+                )
+                .addTo(autoDisposable)
+
+
     }
 
     private fun initPullToRefresh() {
