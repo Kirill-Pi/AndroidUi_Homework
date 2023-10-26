@@ -1,8 +1,9 @@
 package com.example.pigolevmyapplication.di.modules
 
-import com.example.pigolevmyapplication.BuildConfig
+
 import com.example.pigolevmyapplication.data.ApiConstants
-import com.example.pigolevmyapplication.data.TmdbApi
+import com.example.remote_module.BuildConfig
+
 import dagger.Module
 import dagger.Provides
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory

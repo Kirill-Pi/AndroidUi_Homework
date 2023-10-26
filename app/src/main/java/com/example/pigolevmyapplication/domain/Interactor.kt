@@ -3,57 +3,41 @@ package com.example.pigolevmyapplication.domain
 import com.example.pigolevmyapplication.API
 import com.example.pigolevmyapplication.data.MainRepository
 import com.example.pigolevmyapplication.data.PreferenceProvider
-import com.example.pigolevmyapplication.data.TmdbApi
-import com.example.pigolevmyapplication.data.TmdbResultsDto
+
 import com.example.pigolevmyapplication.data.entity.Film
 import com.example.pigolevmyapplication.utils.Converter
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class Interactor(private val repo: MainRepository, private val retrofitService: TmdbApi, private val preferences: PreferenceProvider) {
+class Interactor(private val repo: MainRepository, private val retrofitService: com.example.pigolevmyapplication.di.modules.TmdbApi, private val preferences: PreferenceProvider) {
 
 
     var progressBarState: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
     fun getFilmsFromApi(page: Int) {
-        //Отправляем progressBar
-            progressBarState.onNext(true)
-
-        retrofitService.getFilms(getDefaultCategoryFromPreferences(), API.KEY, "ru-RU", page).enqueue(object : Callback<TmdbResultsDto> {
-            override fun onResponse(call: Call<TmdbResultsDto>, response: Response<TmdbResultsDto>) {
-                //При успехе мы вызываем метод, передаем onSuccess и в этот коллбэк список фильмов
-               // заполняем список, используя оператер map
-                val list = mutableListOf<Film>()
-                val result = response.body()?.tmdbFilms?.map {
-                    list.add(
-                        Film(
-                            title = it.title,
-                            poster = it.posterPath,
-                            description = it.overview,
-                            rating = it.voteAverage,
-                            isInFavorites = false
-                        )
-                    )
-                }
-                //Кладем фильмы в бд
-                Completable.fromSingle<List<Film>> {
-                    repo.putToDb(list)
-                }
-                    .subscribeOn(Schedulers.io())
-                    .subscribe()
-                progressBarState.onNext(false)
+        //Показываем ProgressBar
+        progressBarState.onNext(true)
+        //Метод getDefaultCategoryFromPreferences() будет получать при каждом запросе нужный нам список фильмов
+        retrofitService.getFilms(getDefaultCategoryFromPreferences(), API.KEY, "ru-RU", page)
+            .subscribeOn(Schedulers.io())
+            .map {
+                Converter.convertApiListToDTOList(it.tmdbFilms)
             }
-
-            override fun onFailure(call: Call<TmdbResultsDto>, t: Throwable) {
-                //В случае провала обнуляем progress bar
+            .subscribeBy(
+                onError = {
                     progressBarState.onNext(false)
-            }
-        })
+                },
+                onNext = {
+                    progressBarState.onNext(false)
+                    repo.putToDb(it)
+                }
+            )
     }
     //Метод для сохранения настроек
     fun saveDefaultCategoryToPreferences(category: String) {

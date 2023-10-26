@@ -3,7 +3,7 @@ package com.example.pigolevmyapplication.di.modules
 import android.content.Context
 import com.example.pigolevmyapplication.data.MainRepository
 import com.example.pigolevmyapplication.data.PreferenceProvider
-import com.example.pigolevmyapplication.data.TmdbApi
+import com.example.pigolevmyapplication.di.modules.TmdbApi
 import com.example.pigolevmyapplication.domain.Interactor
 import dagger.Module
 import dagger.Provides
@@ -23,5 +23,5 @@ class DomainModule(val context: Context) {
 
     @Singleton
     @Provides
-    fun provideInteractor(repository: MainRepository, tmdbApi: TmdbApi, preferenceProvider: PreferenceProvider) = Interactor(repo = repository, retrofitService = tmdbApi, preferences = preferenceProvider)
+    fun provideInteractor(repository: MainRepository, tmdbApi: com.example.pigolevmyapplication.di.modules.TmdbApi, preferenceProvider: PreferenceProvider) = Interactor(repo = repository, retrofitService = tmdbApi, preferences = preferenceProvider)
 }
