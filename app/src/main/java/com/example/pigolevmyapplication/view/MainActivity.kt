@@ -1,5 +1,8 @@
 package com.example.pigolevmyapplication.view
 
+import android.content.BroadcastReceiver
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -7,12 +10,15 @@ import androidx.fragment.app.Fragment
 import com.example.pigolevmyapplication.R
 import com.example.pigolevmyapplication.data.entity.Film
 import com.example.pigolevmyapplication.databinding.ActivityMainBinding
+import com.example.pigolevmyapplication.receivers.ConnectionChecker
 import com.example.pigolevmyapplication.view.fragments.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
+    private lateinit var receiver: BroadcastReceiver
+
     private val onBackPressedCallback: OnBackPressedCallback =
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -36,7 +42,20 @@ class MainActivity : AppCompatActivity() {
             .add(R.id.fragment_placeholder, HomeFragment())
             .addToBackStack("home")
            .commit()
+
+        receiver = ConnectionChecker()
+        val filters = IntentFilter().apply {
+            addAction(Intent.ACTION_POWER_CONNECTED)
+            addAction(Intent.ACTION_BATTERY_LOW)
+        }
+        registerReceiver(receiver, filters)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(receiver)
+    }
+
 
     fun launchDetailsFragment(film: Film) {
         val bundle = Bundle()
@@ -50,7 +69,8 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    private fun menuInit() {
+
+private fun menuInit() {
        /* var topAppBar = binding.topAppBar
         topAppBar.setNavigationOnClickListener {
             Toast.makeText(this, "Кинопоиск...", Toast.LENGTH_SHORT).show()
