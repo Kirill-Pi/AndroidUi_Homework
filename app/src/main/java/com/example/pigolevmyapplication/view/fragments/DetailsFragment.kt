@@ -21,6 +21,7 @@ import com.example.pigolevmyapplication.R
 import com.example.pigolevmyapplication.data.ApiConstants
 import com.example.pigolevmyapplication.data.entity.Film
 import com.example.pigolevmyapplication.databinding.FragmentDetailsBinding
+import com.example.pigolevmyapplication.view.notifications.NotificationHelper
 import com.example.pigolevmyapplication.viewmodel.DetailsFragmentViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
@@ -28,13 +29,10 @@ import kotlinx.coroutines.*
 class DetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
-
     lateinit var film: Film
-
     private val viewModel by lazy {
         ViewModelProvider.NewInstanceFactory().create(DetailsFragmentViewModel::class.java)
     }
-
     private val scope = CoroutineScope(Dispatchers.IO)
 
     override fun onCreateView(
@@ -73,6 +71,10 @@ class DetailsFragment : Fragment() {
         favoritesInit()
         binding.detailsFabDownloadWp.setOnClickListener {
             performAsyncLoadOfPoster()
+        }
+
+        binding.detailsFabWatchLater.setOnClickListener {
+            NotificationHelper.createNotification(requireContext(), film)
         }
 
     }
