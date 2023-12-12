@@ -11,7 +11,6 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import androidx.constraintlayout.motion.widget.MotionScene
 import androidx.core.app.ActivityCompat
 
 
@@ -25,6 +24,8 @@ import com.example.pigolevmyapplication.data.ApiConstants
 import com.example.pigolevmyapplication.data.entity.Film
 import com.example.pigolevmyapplication.receivers.ReminderBroadcast
 import com.example.pigolevmyapplication.view.MainActivity
+
+
 import java.util.*
 
 

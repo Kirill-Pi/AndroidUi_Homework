@@ -9,6 +9,7 @@ import android.os.*
 import com.example.pigolevmyapplication.R
 import com.example.pigolevmyapplication.view.MainActivity
 
+
 //Animation by Anastasiya Remeslova taken from https://lottiefiles.com
 
 class SplashScreenActivity : AppCompatActivity() {

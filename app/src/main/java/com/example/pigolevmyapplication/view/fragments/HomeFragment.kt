@@ -17,9 +17,12 @@ import com.example.pigolevmyapplication.utils.AnimationHelper
 import com.example.pigolevmyapplication.utils.AutoDisposable
 import com.example.pigolevmyapplication.utils.addTo
 import com.example.pigolevmyapplication.view.MainActivity
+
 import com.example.pigolevmyapplication.view.rv_adapters.FilmListRecyclerAdapter
 import com.example.pigolevmyapplication.view.rv_adapters.TopSpacingItemDecoration
 import com.example.pigolevmyapplication.viewmodel.HomeFragmentViewModel
+
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableOnSubscribe

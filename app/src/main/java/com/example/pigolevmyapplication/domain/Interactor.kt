@@ -5,6 +5,7 @@ import com.example.pigolevmyapplication.data.MainRepository
 import com.example.pigolevmyapplication.data.PreferenceProvider
 
 import com.example.pigolevmyapplication.data.entity.Film
+import com.example.pigolevmyapplication.di.modules.TmdbApi
 import com.example.pigolevmyapplication.utils.Converter
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
@@ -15,7 +16,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class Interactor(private val repo: MainRepository, private val retrofitService: com.example.pigolevmyapplication.di.modules.TmdbApi, private val preferences: PreferenceProvider) {
+class Interactor(private val repo: MainRepository, private val retrofitService: TmdbApi, private val preferences: PreferenceProvider) {
 
 
     var progressBarState: BehaviorSubject<Boolean> = BehaviorSubject.create()
@@ -28,6 +29,7 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
             .subscribeOn(Schedulers.io())
             .map {
                 Converter.convertApiListToDTOList(it.tmdbFilms)
+
             }
             .subscribeBy(
                 onError = {

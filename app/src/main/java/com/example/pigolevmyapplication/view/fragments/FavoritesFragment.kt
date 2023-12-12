@@ -12,9 +12,13 @@ import com.example.pigolevmyapplication.data.entity.Film
 import com.example.pigolevmyapplication.databinding.FragmentFavoritesBinding
 import com.example.pigolevmyapplication.utils.AnimationHelper
 import com.example.pigolevmyapplication.view.MainActivity
+
+
 import com.example.pigolevmyapplication.view.rv_adapters.FilmListRecyclerAdapter
 import com.example.pigolevmyapplication.view.rv_adapters.TopSpacingItemDecoration
 import com.example.pigolevmyapplication.viewmodel.FavoritesFragmentViewModel
+
+
 
 class FavoritesFragment : Fragment() {
 
