@@ -15,6 +15,7 @@ import com.example.pigolevmyapplication.view.notifications.NotificationConstants
 
 class App : Application() {
     lateinit var dagger: AppComponent
+    var isPromoShown = false
 
     override fun onCreate() {
         super.onCreate()
